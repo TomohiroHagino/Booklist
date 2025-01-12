@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.enjoyhac.booklist.screens.ReaderScreens
 import com.enjoyhac.booklist.screens.ReaderSplashScreen
 import com.enjoyhac.booklist.screens.home.Home
+import com.enjoyhac.booklist.screens.login.ReaderLoginScreen
 
 @Composable
 fun ReaderNavigation() {
@@ -17,6 +18,10 @@ fun ReaderNavigation() {
     ) {
         composable(ReaderScreens.SplashScreen.name) {
             ReaderSplashScreen(navController = navController)
+        }
+
+        composable(ReaderScreens.LoginScreen.name) {
+            ReaderLoginScreen(navController = navController)
         }
 
         composable(ReaderScreens.ReaderHomeScreen.name) {
