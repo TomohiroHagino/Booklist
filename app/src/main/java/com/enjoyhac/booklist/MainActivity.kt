@@ -13,7 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.enjoyhac.booklist.ui.theme.BooklistTheme
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,16 +24,6 @@ class MainActivity : ComponentActivity() {
             BooklistTheme {
                 val db = FirebaseFirestore.getInstance()
                 val user: MutableMap<String, Any> = HashMap()
-                user["firstName"] = "XXX"
-                user["lastName"] = "YYYY"
-
-                db.collection("users").add(user)
-                    .addOnSuccessListener {
-                        Log.d("FB", "onCreate: ${it.id}")
-                    }
-                    .addOnFailureListener {
-                        Log.e("FB", "Error adding user", it)
-                    }
 
                 // A surface container using the 'background' color from the theme
                 Surface(
