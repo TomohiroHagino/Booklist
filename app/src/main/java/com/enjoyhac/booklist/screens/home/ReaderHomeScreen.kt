@@ -1,32 +1,27 @@
 package com.enjoyhac.booklist.screens.home
 
-import androidx.compose.animation.AnimatedContentScope.SlideDirection.Companion.Left
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
+import com.enjoyhac.booklist.components.FABContent
+import com.enjoyhac.booklist.components.ReaderAppBar
+import com.enjoyhac.booklist.components.TitleSection
 import com.enjoyhac.booklist.model.MBook
 import com.enjoyhac.booklist.screens.ReaderScreens
 import com.google.firebase.auth.FirebaseAuth
@@ -52,50 +47,7 @@ fun Home(navController: NavController = NavController(LocalContext.current)) {
     }
 }
 
-@Composable
-fun ReaderAppBar(
-    title: String,
-    showProfile: Boolean = true,
-    navController: NavController
-) {
-    TopAppBar(
-        title = {
-            Row(
-             verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (showProfile) {
-                    Icon(
-                        imageVector = Icons.Default.Favorite,
-                        contentDescription = "Logo Icon",
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
-                            .scale(0.7f)
-                    )
-                    Text(
-                        text = title,
-                        color = Color.Red.copy(alpha = 0.7f),
-                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                    )
-                    Spacer(modifier = Modifier.width(150.dp))
-                }
-            }
-        },
-        actions = {
-                  IconButton(onClick = {
-                      FirebaseAuth.getInstance().signOut().run {
-                          navController.navigate(ReaderScreens.LoginScreen.name)
-                      }
-                  }) {
-                      Icon(
-                          imageVector = Icons.Filled.Logout,
-                          contentDescription = "Logout",
-                          tint = Color.Green.copy(alpha = 0.4f)
-                      )
-                  }
-        },
-        backgroundColor = Color.Transparent, elevation = 0.dp
-    )
-}
+
 
 @Composable
 fun HomeContect(navController: NavController) {
@@ -111,9 +63,11 @@ fun HomeContect(navController: NavController) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
                     contentDescription = "Profile",
-                    modifier = Modifier.clickable {
-                        navController.navigate(ReaderScreens.ReaderStatsScreen.name)
-                    }.size(45.dp),
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(ReaderScreens.ReaderStatsScreen.name)
+                        }
+                        .size(45.dp),
                     tint = MaterialTheme.colors.secondaryVariant
                 )
                 Text(
@@ -132,39 +86,54 @@ fun HomeContect(navController: NavController) {
 }
 
 
+@Preview
 @Composable
-fun TitleSection(modifier: Modifier = Modifier, label: String) {
-    Surface(
-        modifier = modifier.padding(start = 5.dp, top = 1.dp),
-        color = Color.LightGray
+fun ListCard(
+    book: MBook = MBook("xxx", "Running","Me and you","Hello world!"),
+    onPressDetails: (String) -> Unit ={}
+) {
+    val context = LocalContext.current
+    val resources = context.resources
+    val displayMetrics = resources.displayMetrics
+    val screenWidth = displayMetrics.widthPixels / displayMetrics.density
+    val spacing = 10.dp
+
+    Card(
+        shape = RoundedCornerShape(29.dp),
+        backgroundColor = Color.White,
+        elevation = 6.dp,
+        modifier = Modifier
+            .padding(16.dp)
+            .height(242.dp)
+            .width(202.dp)
+            .clickable { onPressDetails.invoke(book.title.toString()) }
     ) {
-        Column {
-            Text(
-                text = label,
-                fontSize = 19.sp,
-                fontStyle = FontStyle.Normal,
-                textAlign = TextAlign.Left
-            )
+        Column(
+            modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
+            horizontalAlignment =  Alignment.Start
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.Center
+            ) {
+
+                Image(
+                    painter = rememberImagePainter(data = ""),
+                    contentDescription = "book image",
+                    modifier = Modifier
+                                    .height(140.dp)
+                                    .width(100.dp)
+                                    .padding(4.dp)
+                )
+                Spacer(
+                    modifier = Modifier.width(50.dp)
+                )
+            }
         }
     }
 }
-
 
 @Composable
 fun ReadingRightNowArea(books: List<MBook>, navController: NavController) {
 
 }
 
-@Composable
-fun FABContent(onTap: () -> Unit) {
-    FloatingActionButton(
-        onClick = { onTap() },
-        shape = RoundedCornerShape(50.dp),
-        backgroundColor = Color(0xFF92CBDF)) {
-        Icon(
-            imageVector = Icons.Default.Add,
-            contentDescription = "Add a Book",
-            tint = Color.White
-        )
-    }
-}
