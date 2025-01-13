@@ -1,10 +1,13 @@
 package com.enjoyhac.booklist.screens.home
 
 import androidx.compose.animation.AnimatedContentScope.SlideDirection.Companion.Left
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.R
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Logout
@@ -19,6 +22,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -95,10 +99,34 @@ fun ReaderAppBar(
 
 @Composable
 fun HomeContect(navController: NavController) {
+
+    val currentUserName = if (!FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty())
+        FirebaseAuth.getInstance().currentUser?.email?.split("@")?.get(0) else "N/A"
     Column(Modifier.padding(2.dp),
-        verticalArrangement = Arrangement.SpaceEvenly){
+        verticalArrangement = Arrangement.SpaceEvenly) {
         Row(modifier = Modifier.align(alignment = Alignment.Start)) {
             TitleSection(label = "あなたは現在、読書中です。。。")
+            Spacer(modifier = Modifier.fillMaxWidth(0.7f))
+            Column {
+                Icon(
+                    imageVector = Icons.Filled.AccountCircle,
+                    contentDescription = "Profile",
+                    modifier = Modifier.clickable {
+                        navController.navigate(ReaderScreens.ReaderStatsScreen.name)
+                    }.size(45.dp),
+                    tint = MaterialTheme.colors.secondaryVariant
+                )
+                Text(
+                    text = currentUserName!!,
+                    modifier = Modifier.padding(2.dp),
+                    style = MaterialTheme.typography.overline,
+                    color = Color.Red,
+                    fontSize = 15.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Clip
+                )
+                Divider()
+            }
         }
     }
 }

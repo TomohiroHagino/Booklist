@@ -9,6 +9,7 @@ import com.enjoyhac.booklist.screens.ReaderScreens
 import com.enjoyhac.booklist.screens.ReaderSplashScreen
 import com.enjoyhac.booklist.screens.home.Home
 import com.enjoyhac.booklist.screens.login.ReaderLoginScreen
+import com.enjoyhac.booklist.screens.stats.ReaderStatsScreen
 
 @ExperimentalComposeUiApi
 @Composable
@@ -28,6 +29,10 @@ fun ReaderNavigation() {
 
         composable(ReaderScreens.ReaderHomeScreen.name) {
             Home(navController = navController)
+        }
+
+        composable(ReaderScreens.ReaderStatsScreen.name) {
+            ReaderStatsScreen(navController = navController)
         }
     }
 
