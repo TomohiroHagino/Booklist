@@ -21,7 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.enjoyhac.booklist.components.ReaderLogo
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
+import java.io.Reader
 
 
 @Preview
@@ -41,7 +43,12 @@ fun ReaderSplashScreen(navController: NavController = NavController(context = Lo
                         .getInterpolation(it)
                 }))
         delay(2000L)
-        navController.navigate(ReaderScreens.LoginScreen.name)
+        // ログイン中ならログイン画面をスキップしてホーム画面へ遷移する
+        if (FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()) {
+            navController.navigate(ReaderScreens.LoginScreen.name)
+        } else {
+            navController.navigate(ReaderScreens.ReaderHomeScreen.name)
+        }
     }
 
     Surface(
