@@ -56,7 +56,7 @@ fun ReaderAppBar(
                         imageVector = Icons.Default.Favorite,
                         contentDescription = "Logo Icon",
                         modifier = Modifier.clip(RoundedCornerShape(12.dp))
-                                           .scale(0.1  df)
+                                           .scale(0.1f)
                     )
                     Text(
                         text = title,
