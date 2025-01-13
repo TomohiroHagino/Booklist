@@ -43,7 +43,6 @@ fun ReaderLoginScreen(
             if (showLoginForm.value) {
                 // ログインフォームを表示
                 UserForm(loading = false, isCreateAccount = false, onDone = { email, password ->
-                    //TODO: FB Login
                     viewModel.signInWithEmailAndPassword(email, password) {
                         navController.navigate(ReaderScreens.ReaderHomeScreen.name)
                     }
@@ -51,7 +50,9 @@ fun ReaderLoginScreen(
             } else {
                 // サインアップフォームを表示
                 UserForm(loading = false, isCreateAccount = true, onDone = { email, password ->
-                    //TODO: create FB account
+                    viewModel.createUserWithEmailAndPassword(email, password) {
+                        navController.navigate(ReaderScreens.ReaderHomeScreen.name)
+                    }
                 })
             }
 
