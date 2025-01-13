@@ -8,11 +8,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -109,7 +112,9 @@ fun ListCard(
             .clickable { onPressDetails.invoke(book.title.toString()) }
     ) {
         Column(
-            modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
+            modifier = Modifier.width(screenWidth.dp - (spacing * 2))
+                               .padding(start = 6.dp)
+            ,
             horizontalAlignment =  Alignment.Start
         ) {
             Row(
@@ -127,7 +132,52 @@ fun ListCard(
                 Spacer(
                     modifier = Modifier.width(50.dp)
                 )
+
+                Column(
+                    modifier = Modifier.padding(top = 25.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.FavoriteBorder,
+                        contentDescription = "Fav Icon",
+                        modifier = Modifier.padding(bottom = 1.dp)
+                    )
+                    BookRating(score = 3.5)
+                }
             }
+            Text(
+                text = "Book title",
+                modifier = Modifier.padding(4.dp),
+                fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = "Authors: All...",
+                modifier = Modifier.padding(4.dp),
+                style = MaterialTheme.typography.caption,
+            )
+        }
+    }
+}
+
+@Composable
+fun BookRating(score: Double = 4.5) {
+    Surface(
+        modifier = Modifier.height(70.dp)
+                           .padding(4.dp),
+        shape = RoundedCornerShape(56.dp),
+        elevation = 6.dp,
+        color = Color.White
+    ) {
+        Column(modifier = Modifier.padding(4.dp)) {
+            Icon(
+                imageVector = Icons.Filled.StarBorder,
+                contentDescription = "Start",
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            Text(text = score.toString(), style= MaterialTheme.typography.subtitle1)
         }
     }
 }
