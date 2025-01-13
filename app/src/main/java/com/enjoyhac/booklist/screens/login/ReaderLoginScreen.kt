@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -29,7 +30,7 @@ fun ReaderLoginScreen(navController: NavController) {
     androidx.compose.material.Surface(modifier = Modifier.fillMaxSize()) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top) {
             ReaderLogo()
-            UserForm(loading = false, isCreateCoount = false, onDone = { email, password ->
+            UserForm(loading = false, isCreateAccount = false, onDone = { email, password ->
                 Log.d("Form", "ReaderLoginScreen: $email $password")
             })
         }
@@ -41,7 +42,7 @@ fun ReaderLoginScreen(navController: NavController) {
 @Composable
 fun UserForm(
     loading: Boolean = false,
-    isCreateCoount: Boolean = false,
+    isCreateAccount: Boolean = false,
     onDone: (String, String) -> Unit = { email, pwd -> }
     ) {
     val email = rememberSaveable { mutableStateOf("") }
@@ -83,6 +84,30 @@ fun UserForm(
                     )
             }
         )
+
+        SubmitButton(
+            textId = if (isCreateAccount) "Create Account" else "Login",
+            loading = loading,
+            validInputs = valid
+            ){ onDone(email.value.trim(), password.value.trim()) }
+    }
+}
+
+@Composable
+fun SubmitButton(
+    textId: String,
+    loading: Boolean,
+    validInputs: Boolean,
+    onClick: () -> Unit,
+    ) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.padding(3.dp).fillMaxWidth(),
+        enabled = !loading && validInputs,
+        shape = CircleShape
+    ) {
+        if (loading) CircularProgressIndicator(modifier = Modifier.size(25.dp))
+        else Text(text = textId)
     }
 }
 
