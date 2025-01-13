@@ -49,7 +49,6 @@ fun ReaderSplashScreen(navController: NavController = NavController(context = Lo
         } else {
             navController.navigate(ReaderScreens.ReaderHomeScreen.name)
         }
-        navController.navigate(ReaderScreens.LoginScreen.name)
     }
 
     Surface(
