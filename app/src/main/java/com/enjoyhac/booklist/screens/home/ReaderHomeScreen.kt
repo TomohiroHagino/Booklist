@@ -1,5 +1,7 @@
 package com.enjoyhac.booklist.screens.home
 
+import android.graphics.Paint.Align
+import android.view.RoundedCorner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.PressInteraction
@@ -13,8 +15,10 @@ import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,7 +62,7 @@ fun HomeContect(navController: NavController) {
     val currentUserName = if (!FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty())
         FirebaseAuth.getInstance().currentUser?.email?.split("@")?.get(0) else "N/A"
     Column(Modifier.padding(2.dp),
-        verticalArrangement = Arrangement.SpaceEvenly) {
+        verticalArrangement = Arrangement.Top) {
         Row(modifier = Modifier.align(alignment = Alignment.Start)) {
             TitleSection(label = "あなたは現在、読書中です。。。")
             Spacer(modifier = Modifier.fillMaxWidth(0.7f))
@@ -85,6 +89,7 @@ fun HomeContect(navController: NavController) {
                 Divider()
             }
         }
+        ListCard()
     }
 }
 
@@ -112,8 +117,9 @@ fun ListCard(
             .clickable { onPressDetails.invoke(book.title.toString()) }
     ) {
         Column(
-            modifier = Modifier.width(screenWidth.dp - (spacing * 2))
-                               .padding(start = 6.dp)
+            modifier = Modifier
+                .width(screenWidth.dp - (spacing * 2))
+                .padding(start = 6.dp)
             ,
             horizontalAlignment =  Alignment.Start
         ) {
@@ -122,12 +128,12 @@ fun ListCard(
             ) {
 
                 Image(
-                    painter = rememberImagePainter(data = ""),
+                    painter = rememberImagePainter(data = "https://books.google.com/books/content?id=qKFDDAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"),
                     contentDescription = "book image",
                     modifier = Modifier
-                                    .height(140.dp)
-                                    .width(100.dp)
-                                    .padding(4.dp)
+                        .height(140.dp)
+                        .width(100.dp)
+                        .padding(4.dp)
                 )
                 Spacer(
                     modifier = Modifier.width(50.dp)
@@ -159,14 +165,24 @@ fun ListCard(
                 style = MaterialTheme.typography.caption,
             )
         }
+        Row(
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            RoundedButton(
+                label = "Reading",
+                radius = 70
+            )
+        }
     }
 }
 
 @Composable
 fun BookRating(score: Double = 4.5) {
     Surface(
-        modifier = Modifier.height(70.dp)
-                           .padding(4.dp),
+        modifier = Modifier
+            .height(70.dp)
+            .padding(4.dp),
         shape = RoundedCornerShape(56.dp),
         elevation = 6.dp,
         color = Color.White
@@ -187,3 +203,29 @@ fun ReadingRightNowArea(books: List<MBook>, navController: NavController) {
 
 }
 
+@Preview
+@Composable
+fun RoundedButton(
+    label: String = "Reading",
+    radius: Int = 29,
+    onPress: () -> Unit ={}
+) {
+    Surface(
+        modifier = Modifier.clip(RoundedCornerShape(
+            bottomEndPercent = radius,
+            topStartPercent = radius
+        )),
+        color = Color(0xFF92CBDF)
+    ) {
+        Column(
+            modifier = Modifier
+                .width(90.dp)
+                .height(40.dp)
+                .clickable { onPress.invoke() },
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = label, style = TextStyle(color = Color.White, fontSize = 15.sp))
+        }
+    }
+}
