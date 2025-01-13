@@ -1,6 +1,7 @@
 package com.enjoyhac.booklist.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -9,6 +10,7 @@ import com.enjoyhac.booklist.screens.ReaderSplashScreen
 import com.enjoyhac.booklist.screens.home.Home
 import com.enjoyhac.booklist.screens.login.ReaderLoginScreen
 
+@ExperimentalComposeUiApi
 @Composable
 fun ReaderNavigation() {
     val navController = rememberNavController()

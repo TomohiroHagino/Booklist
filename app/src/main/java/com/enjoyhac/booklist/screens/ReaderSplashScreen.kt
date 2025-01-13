@@ -2,7 +2,6 @@ package com.enjoyhac.booklist.screens
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
-//import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -21,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.enjoyhac.booklist.components.ReaderLogo
 import kotlinx.coroutines.delay
 
 
@@ -60,11 +60,7 @@ fun ReaderSplashScreen(navController: NavController = NavController(context = Lo
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
             ) {
-            Text(
-                text = "Booklist",
-                style = MaterialTheme.typography.h3,
-                color = Color.Red.copy(alpha = 0.5f)
-                )
+            ReaderLogo()
             Spacer(modifier = Modifier.height(15.dp))
             Text(
                 text = "\"Read Change. Yourself \"",
@@ -72,6 +68,5 @@ fun ReaderSplashScreen(navController: NavController = NavController(context = Lo
                 color = Color.LightGray
             )
         }
-
     }
 }
