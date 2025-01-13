@@ -28,10 +28,14 @@ import com.enjoyhac.booklist.R
 import com.enjoyhac.booklist.components.EmailInput
 import com.enjoyhac.booklist.components.PasswordInput
 import com.enjoyhac.booklist.components.ReaderLogo
+import com.enjoyhac.booklist.screens.ReaderScreens
 
 @ExperimentalComposeUiApi
 @Composable
-fun ReaderLoginScreen(navController: NavController) {
+fun ReaderLoginScreen(
+    navController: NavController,
+    viewModel: LoginScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+) {
     val showLoginForm = rememberSaveable { mutableStateOf(true) }
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top) {
@@ -40,6 +44,9 @@ fun ReaderLoginScreen(navController: NavController) {
                 // ログインフォームを表示
                 UserForm(loading = false, isCreateAccount = false, onDone = { email, password ->
                     //TODO: FB Login
+                    viewModel.signInWithEmailAndPassword(email, password) {
+                        navController.navigate(ReaderScreens.ReaderHomeScreen.name)
+                    }
                 })
             } else {
                 // サインアップフォームを表示

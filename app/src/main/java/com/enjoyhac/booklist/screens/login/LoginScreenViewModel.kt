@@ -19,18 +19,14 @@ class LoginScreenViewModel: ViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     //メールアドレスとパスワードでログインします
-    fun signInWithEmailAndPassword(email: String, password: String) {
-
-    }
-
-    //メールアドレスとパスワードでユーザーを作成します
-    fun createUserWithEmailAndPassword(email: String, password: String)
+    fun signInWithEmailAndPassword(email: String, password: String, home: () -> Unit)
     = viewModelScope.launch {
         try {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful){
-                        TODO("take them home")
+                        Log.d("TAG", "signInWithEmailAndPassword: ログイン成功 ${task.result.toString()}")
+                        home()
                     } else {
                         Log.d("TAG", "signInWithEmailAndPassword: ${task.result.toString()}")
                     }
@@ -39,6 +35,11 @@ class LoginScreenViewModel: ViewModel() {
         } catch (ex: Exception) {
             Log.d("FB", "signInWithEmailAndPassword: ${ex.message}")
         }
+
+    }
+
+    //メールアドレスとパスワードでユーザーを作成します
+    fun createUserWithEmailAndPassword(email: String, password: String) {
 
     }
 
