@@ -1,7 +1,5 @@
 package com.enjoyhac.booklist.screens.home
 
-import android.widget.HorizontalScrollView
-import androidx.activity.OnBackPressedCallback
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -24,16 +22,15 @@ import com.enjoyhac.booklist.model.MBook
 import com.enjoyhac.booklist.screens.ReaderScreens
 import com.google.firebase.auth.FirebaseAuth
 
-@Preview
 @Composable
-fun Home(navController: NavController = NavController(LocalContext.current)) {
+fun Home(navController: NavController) {
     Scaffold(
         topBar = {
                  ReaderAppBar(title = "Booklist", navController = navController )
         },
         floatingActionButton = {
             FABContent{
-
+                navController.navigate(ReaderScreens.SearchScreen.name)
             }
         },
     ) {
@@ -45,8 +42,9 @@ fun Home(navController: NavController = NavController(LocalContext.current)) {
     }
 }
 
+@Preview
 @Composable
-fun HomeContect(navController: NavController) {
+fun HomeContect(navController: NavController = NavController(LocalContext.current)) {
 
     val listOfBooks = listOf(
         MBook(id = "data1", title = "Hello Again 1", authors = "All of us", notes = null),
@@ -57,12 +55,10 @@ fun HomeContect(navController: NavController) {
     )
     val currentUserName = if (!FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty())
         FirebaseAuth.getInstance().currentUser?.email?.split("@")?.get(0) else "N/A"
-    Column(Modifier.padding(2.dp),
+    Column(Modifier.padding(start = 10.dp),
         verticalArrangement = Arrangement.Top) {
         Row(modifier = Modifier.align(alignment = Alignment.Start)) {
-            TitleSection(label = "あなたは現在、読書中です。。。")
-            Spacer(modifier = Modifier.fillMaxWidth(0.7f))
-            Column {
+            Column() {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
                     contentDescription = "Profile",
@@ -70,7 +66,8 @@ fun HomeContect(navController: NavController) {
                         .clickable {
                             navController.navigate(ReaderScreens.ReaderStatsScreen.name)
                         }
-                        .size(45.dp),
+                        .size(45.dp)
+                    ,
                     tint = MaterialTheme.colors.secondaryVariant
                 )
                 Text(
@@ -82,8 +79,10 @@ fun HomeContect(navController: NavController) {
                     maxLines = 1,
                     overflow = TextOverflow.Clip
                 )
-                Divider()
+//                Divider()
             }
+            TitleSection(label = "あなたは現在、読書中です。。。")
+//            Spacer()
         }
         ReadingRightNowArea(
             books = listOf(),

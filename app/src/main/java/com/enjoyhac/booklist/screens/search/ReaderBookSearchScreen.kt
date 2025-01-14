@@ -10,18 +10,16 @@ import androidx.navigation.NavController
 import com.enjoyhac.booklist.components.ReaderAppBar
 import com.enjoyhac.booklist.screens.ReaderScreens
 
-@Preview
 @Composable
-fun SearchScreen(navController: NavController = NavController(LocalContext.current)) {
+fun SearchScreen(navController: NavController) {
     Scaffold(topBar = {
         ReaderAppBar(
             title = "Search Books",
             icon = Icons.Default.ArrowBack,
             showProfile = false,
             navController = navController,
-        )
+        ) { navController.navigate(ReaderScreens.ReaderHomeScreen.name) }
     }) {
-        // これも引数。ラムダなのでこのように渡している。
-        navController.navigate(ReaderScreens.ReaderHomeScreen.name)
+
     }
 }

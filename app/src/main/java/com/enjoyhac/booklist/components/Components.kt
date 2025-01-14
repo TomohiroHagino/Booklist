@@ -1,6 +1,5 @@
 package com.enjoyhac.booklist.components
 
-import androidx.activity.OnBackPressedCallback
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -155,8 +154,8 @@ fun InputField(
 @Composable
 fun TitleSection(modifier: Modifier = Modifier, label: String) {
     Surface(
-        modifier = modifier.padding(start = 5.dp, top = 1.dp),
-        color = Color.LightGray
+        modifier = modifier.padding(start = 10.dp, top = 1.dp),
+        color = Color.White
     ) {
         Column {
             Text(
@@ -189,24 +188,24 @@ fun ReaderAppBar(
                         contentDescription = "Logo Icon",
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp))
-                            .scale(0.7f)
+                            .scale(0.9f)
                     )
-                    if (icon != null) {
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = "arrow back",
-                            tint = Color.Red.copy(alpha = 0.7f),
-                            modifier = Modifier.clickable { onBackAllowClicked.invoke() }
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(150.dp))
-                    Text(
-                        text = title,
-                        color = Color.Red.copy(alpha = 0.7f),
-                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                    )
-                    Spacer(modifier = Modifier.width(150.dp))
                 }
+                if (icon != null) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = "arrow back",
+                        tint = Color.Red.copy(alpha = 0.7f),
+                        modifier = Modifier.clickable { onBackAllowClicked.invoke() }
+                    )
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = title,
+                    color = Color.Red.copy(alpha = 0.7f),
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                    modifier = Modifier.weight(1f),
+                )
             }
         },
         actions = {
@@ -215,15 +214,16 @@ fun ReaderAppBar(
                     navController.navigate(ReaderScreens.LoginScreen.name)
                 }
             }) {
-                if (showProfile) Row() {
+                if (showProfile) Row {
                     Icon(
                         imageVector = Icons.Filled.Logout,
                         contentDescription = "Logout",
 //                        tint = Color.Green.copy(alpha = 0.4f)
                     )
-                } else {
-
                 }
+//                else {
+//
+//                }
 
             }
         },

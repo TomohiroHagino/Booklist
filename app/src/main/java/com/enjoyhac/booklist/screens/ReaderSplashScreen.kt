@@ -26,9 +26,8 @@ import kotlinx.coroutines.delay
 import java.io.Reader
 
 
-@Preview
 @Composable
-fun ReaderSplashScreen(navController: NavController = NavController(context = LocalContext.current)) {
+fun ReaderSplashScreen(navController: NavController) {
 
     val scale = remember {
         Animatable(0f)
