@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.enjoyhac.booklist.components.InputField
 import com.enjoyhac.booklist.components.ReaderAppBar
+import com.enjoyhac.booklist.model.Item
 import com.enjoyhac.booklist.model.MBook
 import com.enjoyhac.booklist.screens.ReaderScreens
 
@@ -66,31 +67,23 @@ fun BookList(navController: NavController, viewModel: BookSearchViewModel) {
         CircularProgressIndicator()
     } else {
         Log.d("ReaderBookSearchScreen(loadning is done)", "BookList: ${viewModel.listOfBooks.value.data}")
-    }
 
-    val listOfBooks = listOf(
-        MBook(id = "data1", title = "Hello Again 1", authors = "All of us", notes = null),
-        MBook(id = "data2", title = "Hello Again 2", authors = "All of us", notes = null),
-        MBook(id = "data3", title = "Hello Again 3", authors = "All of us", notes = null),
-        MBook(id = "data4", title = "Hello Again 4", authors = "All of us", notes = null),
-        MBook(id = "data5", title = "Hello Again 5", authors = "All of us", notes = null),
-    )
+        val listOfBooks = viewModel.listOfBooks.value.data!!
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentPadding = PaddingValues(16.dp)
-    ) {
-        items(items = listOfBooks) { book ->
-            BookRow(book, navController)
+        LazyColumn(
+            modifier = Modifier.padding(16.dp).fillMaxSize(),
+            contentPadding = PaddingValues(16.dp)
+        ) {
+            items(items = listOfBooks) { book ->
+                BookRow(book, navController)
+            }
         }
     }
 }
 
 
 @Composable
-fun BookRow(book: MBook, navController: NavController) {
+fun BookRow(book: Item, navController: NavController) {
     Card(
         modifier = Modifier
             .clickable { }
@@ -104,8 +97,11 @@ fun BookRow(book: MBook, navController: NavController) {
             modifier = Modifier.padding(5.dp),
             verticalAlignment = Alignment.Top
         ) {
-            val imageUrl =
+            val imageUrl = if (book.volumeInfo.imageLinks == null) {
                 "https://books.google.com/books/content?id=qKFDDAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+            } else {
+                book.volumeInfo.imageLinks.smallThumbnail.replace("http://", "https://")
+            }
             Image(
                 painter = rememberImagePainter(data = imageUrl),
                 "book image",
@@ -115,9 +111,9 @@ fun BookRow(book: MBook, navController: NavController) {
                     .padding(end = 4.dp)
             )
             Column() {
-                Text(text = book.title.toString(), overflow = TextOverflow.Ellipsis)
+                Text(text = book.volumeInfo.title, overflow = TextOverflow.Ellipsis)
                 Text(
-                    text = "Author: ${book.authors}",
+                    text = "Author: ${book.volumeInfo.authors}",
                     overflow = TextOverflow.Clip,
                     style = MaterialTheme.typography.caption
                 )

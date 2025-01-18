@@ -11,36 +11,34 @@ import javax.inject.Inject
 // repository
 // データソース（例: API、ローカルデータベース、キャッシュなど）とのやり取りを管理し、そのロジックを分離する
 class BookRepository @Inject constructor(private val api: BooksApi) {
-    private val dataOrException = DataOrException<List<Item>, Boolean, Exception>()
-    private val bookInfoDataOrException = DataOrException<Item, Boolean, Exception>()
+   // private val dataOrException = DataOrException<List<Item>, Boolean, Exception>()
+   // private val bookInfoDataOrException = DataOrException<Item, Boolean, Exception>()
 
     suspend fun getBooks(searchQuery: String): DataOrException<List<Item>, Boolean, Exception> {
-        try {
-            dataOrException.loading = true
-            dataOrException.data = api.getAllBooks(searchQuery).items
-            if (dataOrException.data!!.isNotEmpty()) dataOrException.loading = false
+        val result = DataOrException<List<Item>, Boolean, Exception>()
 
-        } catch(e: Exception) {
-            dataOrException.e = e
+        try {
+            result.loading = true
+            result.data = api.getAllBooks(searchQuery).items
+            result.loading = false
+        } catch (e: Exception) {
+            result.e = e
             Log.d("BookRepository(Exception)", "getBooks: $e")
         }
-
-        // <List<Item>, Boolean, Exception>の値が返る
-        return dataOrException
+        return result
     }
 
     suspend fun getBookInfo(bookId: String): DataOrException<Item, Boolean, Exception> {
-        try {
-            bookInfoDataOrException.loading = true
-            bookInfoDataOrException.data = api.getBookInfo(bookId)
-            if (bookInfoDataOrException.data.toString().isNotEmpty()) bookInfoDataOrException.loading = false
+        val result = DataOrException<Item, Boolean, Exception>()
 
-        } catch(e: Exception) {
-            bookInfoDataOrException.e = e
+        try {
+            result.loading = true
+            result.data = api.getBookInfo(bookId)
+            result.loading = false
+        } catch (e: Exception) {
+            result.e = e
             Log.d("BookRepository(Exception)", "getBookInfo: $e")
         }
-
-        // <Item, Boolean, Exception>の値が返る
-        return bookInfoDataOrException
+        return result
     }
 }
