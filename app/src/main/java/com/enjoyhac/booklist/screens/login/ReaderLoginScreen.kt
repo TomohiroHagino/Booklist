@@ -66,11 +66,8 @@ fun ReaderLoginScreen(
                 Text(text = "New User?")
                 Text(
                     text,
-                    modifier = Modifier
-                        .clickable {
-                            showLoginForm.value = !showLoginForm.value
-                        }
-                        .padding(start = 5.dp),
+                    modifier = Modifier.padding(start = 5.dp)
+                                       .clickable { showLoginForm.value = !showLoginForm.value },
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colors.secondaryVariant
                 )

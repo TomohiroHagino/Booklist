@@ -51,16 +51,11 @@ fun ReaderSplashScreen(navController: NavController) {
     }
 
     Surface(
-        modifier = Modifier
-                         .padding(15.dp)
-                         .size(330.dp)
-                         .scale(scale.value),
+        modifier = Modifier.padding(15.dp).size(330.dp).scale(scale.value),
         shape = CircleShape,
         color = Color.White,
-        border = BorderStroke(
-            width = 2.dp,
-            color = Color.LightGray
-        )) {
+        border = BorderStroke(width = 2.dp, color = Color.LightGray)
+    ) {
         Column(
             modifier = Modifier.padding(1.dp),
             horizontalAlignment = Alignment.CenterHorizontally,

@@ -25,13 +25,9 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun Home(navController: NavController) {
     Scaffold(
-        topBar = {
-                 ReaderAppBar(title = "Booklist", navController = navController )
-        },
+        topBar = { ReaderAppBar(title = "Booklist", navController = navController ) },
         floatingActionButton = {
-            FABContent{
-                navController.navigate(ReaderScreens.SearchScreen.name)
-            }
+            FABContent{ navController.navigate(ReaderScreens.SearchScreen.name) }
         },
     ) {
         //content
@@ -62,12 +58,8 @@ fun HomeContect(navController: NavController = NavController(LocalContext.curren
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
                     contentDescription = "Profile",
-                    modifier = Modifier
-                        .clickable {
-                            navController.navigate(ReaderScreens.ReaderStatsScreen.name)
-                        }
-                        .size(45.dp)
-                    ,
+                    modifier = Modifier.size(45.dp)
+                                       .clickable { navController.navigate(ReaderScreens.ReaderStatsScreen.name) },
                     tint = MaterialTheme.colors.secondaryVariant
                 )
                 Text(
