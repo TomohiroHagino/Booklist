@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.enjoyhac.booklist.components.InputField
@@ -27,7 +29,7 @@ import com.enjoyhac.booklist.model.MBook
 import com.enjoyhac.booklist.screens.ReaderScreens
 
 @Composable
-fun SearchScreen(navController: NavController) {
+fun SearchScreen(navController: NavController, viewModel: BookSearchViewModel = hiltViewModel()) {
     Scaffold(topBar = {
         ReaderAppBar(
             title = "Search Books",
@@ -41,10 +43,11 @@ fun SearchScreen(navController: NavController) {
                 SearchForm(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(16.dp),
+                    viewModel
                 )
-                {
-                    Log.d("TAG", "SearchScreen: ")
+                { query ->
+                    viewModel.searchBooks(query)
                 }
                 Spacer(modifier = Modifier.height(13.dp))
                 BookList(navController)
@@ -120,6 +123,7 @@ fun BookRow(book: MBook, navController: NavController) {
 @Composable
 fun SearchForm(
     modifier: Modifier = Modifier,
+    viewModel: BookSearchViewModel,
     loading: Boolean = false,
     hint: String = "Search",
     onSearch: (String) -> Unit = {}

@@ -1,6 +1,7 @@
 package com.enjoyhac.booklist.repository
 
 import android.provider.ContactsContract.Data
+import android.util.Log
 import com.enjoyhac.booklist.data.DataOrException
 import com.enjoyhac.booklist.model.Item
 import com.enjoyhac.booklist.network.BooksApi
@@ -21,6 +22,7 @@ class BookRepository @Inject constructor(private val api: BooksApi) {
 
         } catch(e: Exception) {
             dataOrException.e = e
+            Log.d("BookRepository(Exception)", "getBooks: $e")
         }
 
         // <List<Item>, Boolean, Exception>の値が返る
@@ -32,9 +34,10 @@ class BookRepository @Inject constructor(private val api: BooksApi) {
             bookInfoDataOrException.loading = true
             bookInfoDataOrException.data = api.getBookInfo(bookId)
             if (bookInfoDataOrException.data.toString().isNotEmpty()) bookInfoDataOrException.loading = false
-            else {}
+
         } catch(e: Exception) {
             bookInfoDataOrException.e = e
+            Log.d("BookRepository(Exception)", "getBookInfo: $e")
         }
 
         // <Item, Boolean, Exception>の値が返る

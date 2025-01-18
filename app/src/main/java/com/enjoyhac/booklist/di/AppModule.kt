@@ -2,17 +2,23 @@ package com.enjoyhac.booklist.di
 
 import androidx.compose.ui.graphics.GraphicsLayerScope
 import com.enjoyhac.booklist.network.BooksApi
+import com.enjoyhac.booklist.repository.BookRepository
 import com.enjoyhac.booklist.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(Singleton::class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Singleton
+    @Provides
+    fun provideBookRepository(api: BooksApi) = BookRepository(api)
 
     @Singleton
     @Provides

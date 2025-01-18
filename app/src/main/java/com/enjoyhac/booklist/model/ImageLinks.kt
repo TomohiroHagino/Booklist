@@ -11,7 +11,6 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 
 data class ImageLinks (
-
-	@SerializedName("smallThumbnail") val smallThumbnail : String,
-	@SerializedName("thumbnail") val thumbnail : String
+	val smallThumbnail : String,
+	val thumbnail : String
 )

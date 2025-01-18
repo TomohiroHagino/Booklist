@@ -1,7 +1,7 @@
 package com.enjoyhac.booklist.model
 
 import ImageLinks
-import IndustryIdentifiers
+//import IndustryIdentifiers
 import PanelizationSummary
 import ReadingModes
 
@@ -9,9 +9,9 @@ data class VolumeInfo (
     val title : String,
     val authors : List<String>,
     val publisher : String,
-    val publishedDate : Int,
+    val publishedDate : String,
     val description : String,
-    val industryIdentifiers : List<IndustryIdentifiers>,
+    val industryIdentifiers : List<IndustryIdentifier>,
     val readingModes : ReadingModes,
     val pageCount : Int,
     val printType : String,
@@ -27,4 +27,9 @@ data class VolumeInfo (
     val previewLink : String,
     val infoLink : String,
     val canonicalVolumeLink : String
+)
+
+data class IndustryIdentifier(
+    val type: String,
+    val identifier: String
 )
