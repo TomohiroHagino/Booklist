@@ -2,6 +2,7 @@ package com.enjoyhac.booklist.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -9,6 +10,7 @@ import com.enjoyhac.booklist.screens.ReaderScreens
 import com.enjoyhac.booklist.screens.ReaderSplashScreen
 import com.enjoyhac.booklist.screens.home.Home
 import com.enjoyhac.booklist.screens.login.ReaderLoginScreen
+import com.enjoyhac.booklist.screens.search.BookSearchViewModel
 import com.enjoyhac.booklist.screens.search.SearchScreen
 import com.enjoyhac.booklist.screens.stats.ReaderStatsScreen
 
@@ -33,8 +35,8 @@ fun ReaderNavigation() {
         }
 
         composable(ReaderScreens.SearchScreen.name) {
-            println("Navigating to route: ${ReaderScreens.SearchScreen.name}")
-            SearchScreen(navController = navController)
+            val viewModel = hiltViewModel<BookSearchViewModel>()
+            SearchScreen(navController = navController, viewModel)
         }
 
         composable(ReaderScreens.ReaderStatsScreen.name) {
