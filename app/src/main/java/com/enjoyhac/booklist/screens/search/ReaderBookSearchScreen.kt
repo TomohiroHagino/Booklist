@@ -1,27 +1,29 @@
 package com.enjoyhac.booklist.screens.search
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ExperimentalComposeApi
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.enjoyhac.booklist.components.InputField
 import com.enjoyhac.booklist.components.ReaderAppBar
+import com.enjoyhac.booklist.model.MBook
 import com.enjoyhac.booklist.screens.ReaderScreens
 
 @Composable
@@ -37,8 +39,76 @@ fun SearchScreen(navController: NavController) {
         Surface() {
             Column {
                 SearchForm(
-                    modifier = Modifier.fillMaxWidth()
-                                       .padding(16.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
+                {
+                    Log.d("TAG", "SearchScreen: ")
+                }
+                Spacer(modifier = Modifier.height(13.dp))
+                BookList(navController)
+            }
+        }
+    }
+}
+
+
+@Composable
+fun BookList(navController: NavController) {
+
+    val listOfBooks = listOf(
+        MBook(id = "data1", title = "Hello Again 1", authors = "All of us", notes = null),
+        MBook(id = "data2", title = "Hello Again 2", authors = "All of us", notes = null),
+        MBook(id = "data3", title = "Hello Again 3", authors = "All of us", notes = null),
+        MBook(id = "data4", title = "Hello Again 4", authors = "All of us", notes = null),
+        MBook(id = "data5", title = "Hello Again 5", authors = "All of us", notes = null),
+    )
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        contentPadding = PaddingValues(16.dp)
+    ) {
+        items(items = listOfBooks) { book ->
+            BookRow(book, navController)
+        }
+    }
+}
+
+
+@Composable
+fun BookRow(book: MBook, navController: NavController) {
+    Card(
+        modifier = Modifier
+            .clickable { }
+            .fillMaxWidth()
+            .height(100.dp)
+            .padding(3.dp),
+        shape = RectangleShape,
+        elevation = 7.dp
+    ) {
+        Row(
+            modifier = Modifier.padding(5.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            val imageUrl =
+                "https://books.google.com/books/content?id=qKFDDAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+            Image(
+                painter = rememberImagePainter(data = imageUrl),
+                "book image",
+                modifier = Modifier
+                    .width(80.dp)
+                    .fillMaxHeight()
+                    .padding(end = 4.dp)
+            )
+            Column() {
+                Text(text = book.title.toString(), overflow = TextOverflow.Ellipsis)
+                Text(
+                    text = "Author: ${book.authors}",
+                    overflow = TextOverflow.Clip,
+                    style = MaterialTheme.typography.caption
                 )
             }
         }
@@ -69,9 +139,9 @@ fun SearchForm(
             enabled = true,
             onAction = KeyboardActions {
                 if (!valid) return@KeyboardActions
-                    onSearch(searchQueryState.value.trim())
-                    searchQueryState.value = ""
-                    keyboardController?.hide()
+                onSearch(searchQueryState.value.trim())
+                searchQueryState.value = ""
+                keyboardController?.hide()
             }
         )
     }

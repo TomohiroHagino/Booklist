@@ -55,10 +55,10 @@ fun HomeContect(navController: NavController = NavController(LocalContext.curren
     )
     val currentUserName = if (!FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty())
         FirebaseAuth.getInstance().currentUser?.email?.split("@")?.get(0) else "N/A"
-    Column(Modifier.padding(start = 10.dp),
+    Column(
         verticalArrangement = Arrangement.Top) {
         Row(modifier = Modifier.align(alignment = Alignment.Start)) {
-            Column() {
+            Column(Modifier.padding(start = 10.dp)) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
                     contentDescription = "Profile",
