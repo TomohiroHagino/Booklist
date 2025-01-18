@@ -11,7 +11,6 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 
 data class ReadingModes (
-
 	val text : Boolean,
 	val image : Boolean
 )

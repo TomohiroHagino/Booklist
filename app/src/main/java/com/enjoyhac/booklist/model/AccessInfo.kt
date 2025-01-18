@@ -11,7 +11,6 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 
 data class AccessInfo (
-
 	val country : String,
 	val viewability : String,
 	val embeddable : Boolean,
