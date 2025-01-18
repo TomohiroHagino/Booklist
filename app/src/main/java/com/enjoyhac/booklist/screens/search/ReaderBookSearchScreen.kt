@@ -17,6 +17,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -64,7 +65,7 @@ fun BookList(navController: NavController, viewModel: BookSearchViewModel) {
 
     if (viewModel.listOfBooks.value.loading == true) {
         Log.d("ReaderBookSearchScreen(loading...)", "BookList: ${viewModel.listOfBooks.value.data}")
-        CircularProgressIndicator()
+        LinearProgressIndicator()
     } else {
         Log.d("ReaderBookSearchScreen(loadning is done)", "BookList: ${viewModel.listOfBooks.value.data}")
 
@@ -86,7 +87,7 @@ fun BookList(navController: NavController, viewModel: BookSearchViewModel) {
 fun BookRow(book: Item, navController: NavController) {
     Card(
         modifier = Modifier
-            .clickable { }
+            .clickable { navController.navigate(ReaderScreens.DetailScreen.name + "/${book.id}") }
             .fillMaxWidth()
             .height(100.dp)
             .padding(3.dp),
@@ -115,6 +116,18 @@ fun BookRow(book: Item, navController: NavController) {
                 Text(
                     text = "Author: ${book.volumeInfo.authors}",
                     overflow = TextOverflow.Clip,
+                    style = MaterialTheme.typography.caption
+                )
+                Text(
+                    text = "Date: ${book.volumeInfo.publishedDate}",
+                    overflow = TextOverflow.Clip,
+                    fontStyle = FontStyle.Italic,
+                    style = MaterialTheme.typography.caption
+                )
+                Text(
+                    text = "${book.volumeInfo.categories}",
+                    overflow = TextOverflow.Clip,
+                    fontStyle = FontStyle.Italic,
                     style = MaterialTheme.typography.caption
                 )
             }

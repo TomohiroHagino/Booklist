@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class LoginScreenViewModel: ViewModel() {
-//    val loadingState = MutableStateFlow(LoadingState.IDLE)
+    // val loadingState = MutableStateFlow(LoadingState.IDLE)
     private val auth: FirebaseAuth = Firebase.auth
 
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
