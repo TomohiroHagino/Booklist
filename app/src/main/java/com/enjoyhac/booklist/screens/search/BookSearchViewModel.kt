@@ -25,11 +25,11 @@ constructor(private val repository: BookRepository): ViewModel() {
 
      fun searchBooks(query: String) {
         viewModelScope.launch {
-            Log.d("クエリ実行前", "searchBooks: $query")
+            // Log.d("クエリ実行前", "searchBooks: $query")
             listOfBooks.value = DataOrException(null, true, null) // 再検索時に状態リセット
             if (query.isEmpty()) return@launch
             listOfBooks.value = repository.getBooks(query)
-            Log.d("クエリ実行後", "searchBooks: ${listOfBooks.value.data.toString()}")
+            // Log.d("クエリ実行後", "searchBooks: ${listOfBooks.value.data.toString()}")
         }
     }
 }

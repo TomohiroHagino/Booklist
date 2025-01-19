@@ -24,11 +24,11 @@ class DetailsViewModel @Inject constructor(private val repository: BookRepositor
 
     fun getViewBookInfo(bookId: String) {
         viewModelScope.launch {
-            Log.d("クエリ実行前", "getViewBookInfo: $bookId")
+            // Log.d("クエリ実行前", "getViewBookInfo: $bookId")
             bookInfo.value = DataOrException(null, true, null) // 再検索時に状態リセット
             if (bookId.isEmpty()) return@launch
             bookInfo.value = repository.getBookInfo(bookId)
-            Log.d("クエリ実行後", "getViewBookInfo: ${bookInfo.value.data.toString()}")
+            // Log.d("クエリ実行後", "getViewBookInfo: ${bookInfo.value.data.toString()}")
         }
     }
 }
