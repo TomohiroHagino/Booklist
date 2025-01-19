@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
@@ -27,6 +28,11 @@ import com.enjoyhac.booklist.screens.search.BookSearchViewModel
 
 @Composable
 fun BookDetailsScreen(navController: NavController, bookId: String, viewModel: DetailsViewModel = hiltViewModel()) {
+
+    // ページが開いたときにデータ取得を実行
+    LaunchedEffect(key1 = bookId) {
+        viewModel.getViewBookInfo(bookId)
+    }
 
     Scaffold(
         topBar = {
@@ -68,30 +74,30 @@ fun ShowBookDetails(navController: NavController, detailsViewModel: DetailsViewM
             shape = CircleShape,
             elevation = 4.dp
         ) {
-            Image(painter = rememberImagePainter(data = book.volumeInfo.imageLinks.thumbnail),
+            Image(painter = rememberImagePainter(data = book.volumeInfo.imageLinks.thumbnail.replace("http://", "https://")),
                 contentDescription = "Book Image",
                 modifier = Modifier.width(90.dp).height(90.dp).padding(1.dp))
-            Text(text = book.volumeInfo.title, overflow = TextOverflow.Ellipsis)
-            Text(
-                text = "Authors: ${book.volumeInfo.authors}",
-                overflow = TextOverflow.Clip,
-                style = MaterialTheme.typography.caption
-            )
-            Text(
-                text = "Page Count: ${book.volumeInfo.pageCount}",
-                overflow = TextOverflow.Clip,
-                style = MaterialTheme.typography.caption
-            )
-            Text(
-                text = "Categories: ${book.volumeInfo.categories}",
-                overflow = TextOverflow.Clip,
-                style = MaterialTheme.typography.subtitle1
-            )
-            Text(
-                text = "Published: ${book.volumeInfo.publishedDate}",
-                overflow = TextOverflow.Clip,
-                style = MaterialTheme.typography.subtitle2
-            )
         }
+        Text(text = book.volumeInfo.title, overflow = TextOverflow.Ellipsis)
+        Text(
+            text = "Authors: ${book.volumeInfo.authors}",
+            overflow = TextOverflow.Clip,
+            style = MaterialTheme.typography.caption
+        )
+        Text(
+            text = "Page Count: ${book.volumeInfo.pageCount}",
+            overflow = TextOverflow.Clip,
+            style = MaterialTheme.typography.caption
+        )
+        Text(
+            text = "Categories: ${book.volumeInfo.categories}",
+            overflow = TextOverflow.Clip,
+            style = MaterialTheme.typography.subtitle1
+        )
+        Text(
+            text = "Published: ${book.volumeInfo.publishedDate}",
+            overflow = TextOverflow.Clip,
+            style = MaterialTheme.typography.subtitle2
+        )
     }
 }
