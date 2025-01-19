@@ -23,7 +23,7 @@ constructor(private val repository: BookRepository): ViewModel() {
         searchBooks("android")
     }
 
-    fun searchBooks(query: String) {
+     fun searchBooks(query: String) {
         viewModelScope.launch {
             Log.d("クエリ実行前", "searchBooks: $query")
             listOfBooks.value = DataOrException(null, true, null) // 再検索時に状態リセット
