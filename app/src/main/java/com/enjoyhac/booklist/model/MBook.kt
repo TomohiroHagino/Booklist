@@ -1,10 +1,11 @@
 package com.enjoyhac.booklist.model
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.PropertyName
 
 data class MBook(
-    var id: String? = null,
+    @Exclude var id: String? = null,
     var title: String? = null,
     var authors: String? = null,
     var notes: String? = null,
@@ -15,7 +16,7 @@ data class MBook(
     @get:PropertyName("published_date")
     @set:PropertyName("published_date")
     var publishedDate: String? =null,
-    var rating: String? = null,
+    var rating: Double? = null,
     var description: String? = null,
     @get:PropertyName("page_count")
     @set:PropertyName("page_count")
