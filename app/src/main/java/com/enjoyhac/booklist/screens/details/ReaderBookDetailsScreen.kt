@@ -63,16 +63,6 @@ fun ShowBookDetails(navController: NavController, detailsViewModel: DetailsViewM
 
         val book = detailsViewModel.bookInfo.value.data!!
 
-//        LazyColumn(
-//            modifier = Modifier.padding(16.dp).fillMaxSize(),
-//            contentPadding = PaddingValues(16.dp)
-//        ) {
-//            item {
-//                Text(text = "Book id: ${bookInfo.id}")
-//                Text(text = "Book data: ${bookInfo.volumeInfo}")
-//            }
-//        }
-
         Card(
             modifier = Modifier.padding(34.dp),
             shape = CircleShape,
@@ -95,13 +85,11 @@ fun ShowBookDetails(navController: NavController, detailsViewModel: DetailsViewM
             Text(
                 text = "Categories: ${book.volumeInfo.categories}",
                 overflow = TextOverflow.Clip,
-//                fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.subtitle1
             )
             Text(
                 text = "Published: ${book.volumeInfo.publishedDate}",
                 overflow = TextOverflow.Clip,
-//                fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.subtitle2
             )
         }
