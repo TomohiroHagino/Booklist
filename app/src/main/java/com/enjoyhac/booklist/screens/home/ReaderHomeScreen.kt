@@ -59,7 +59,7 @@ fun HomeContent(navController: NavController = NavController(LocalContext.curren
 //        MBook(id = "data4", title = "Hello Again 4", authors = "All of us", notes = null),
 //        MBook(id = "data5", title = "Hello Again 5", authors = "All of us", notes = null),
 //    )
-    
+
     val currentUserName = if (!FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty())
         FirebaseAuth.getInstance().currentUser?.email?.split("@")?.get(0) else "N/A"
     Column(
@@ -88,10 +88,7 @@ fun HomeContent(navController: NavController = NavController(LocalContext.curren
             TitleSection(label = "あなたは現在、読書中です。。。")
 //            Spacer()
         }
-        ReadingRightNowArea(
-            books = listOf(),
-            navController = navController
-        )
+        ReadingRightNowArea(listOfBooks = listOfBooks, navController = navController )
         TitleSection(label = "Reading List")
 
         BookListArea(listOfBooks = listOfBooks, navController = navController)
@@ -102,8 +99,7 @@ fun HomeContent(navController: NavController = NavController(LocalContext.curren
 @Composable
 fun BookListArea(listOfBooks: List<MBook>, navController: NavController) {
     HorizontalScrollableComponent(listOfBooks) {
-        Log.d("TAG","BookListArea $it")
-        // Todo: Cardをクリックすると詳細に移動する
+        navController.navigate(ReaderScreens.UpdateScreen.name + "/$it")
     }
 }
 
@@ -129,8 +125,17 @@ fun HorizontalScrollableComponent(
 }
 
 @Composable
-fun ReadingRightNowArea(books: List<MBook>, navController: NavController) {
-    ListCard()
+fun ReadingRightNowArea(listOfBooks: List<MBook>,
+                        navController: NavController) {
+    //Filter books by reading now
+    val readingNowList = listOfBooks.filter { mBook ->
+        mBook.startedReading != null && mBook.finishedReading == null
+    }
+
+    HorizontalScrollableComponent(readingNowList){
+        Log.d("TAG", "BoolListArea: $it")
+        navController.navigate(ReaderScreens.UpdateScreen.name + "/$it")
+    }
 }
 
 

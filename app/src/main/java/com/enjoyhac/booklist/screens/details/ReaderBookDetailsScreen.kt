@@ -147,7 +147,7 @@ fun ShowBookDetails(navController: NavController, detailsViewModel: DetailsViewM
                     description = bookData?.description,
                     categories = bookData?.categories.toString(),
                     notes = "",
-                    photoUr = bookData?.imageLinks.thumbnail,
+                    photoUrl = bookData?.imageLinks.thumbnail,
                     publishedDate = bookData?.publishedDate,
                     pageCount = bookData?.pageCount.toString(),
                     rating = 0.0,

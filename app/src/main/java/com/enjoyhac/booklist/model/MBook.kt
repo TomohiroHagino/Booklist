@@ -3,6 +3,7 @@ package com.enjoyhac.booklist.model
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.PropertyName
+import retrofit2.http.Url
 
 data class MBook(
     @Exclude var id: String? = null,
@@ -11,7 +12,7 @@ data class MBook(
     var notes: String? = null,
     @get:PropertyName("book_photo_url")
     @set:PropertyName("book_photo_url")
-    var photoUr: String? = null,
+    var photoUrl: String? = null,
     var categories: String? = null,
     @get:PropertyName("published_date")
     @set:PropertyName("published_date")

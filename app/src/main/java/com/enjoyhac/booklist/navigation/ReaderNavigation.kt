@@ -17,6 +17,7 @@ import com.enjoyhac.booklist.screens.login.ReaderLoginScreen
 import com.enjoyhac.booklist.screens.search.BookSearchViewModel
 import com.enjoyhac.booklist.screens.search.SearchScreen
 import com.enjoyhac.booklist.screens.stats.ReaderStatsScreen
+import com.enjoyhac.booklist.screens.update.BookUpdateScreen
 
 @ExperimentalComposeUiApi
 @Composable
@@ -55,6 +56,16 @@ fun ReaderNavigation() {
                 backStackEntry.arguments?.getString("bookId").let {
                 val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
                 BookDetailsScreen(navController = navController, bookId = bookId)
+            }
+        }
+
+        val updateName = ReaderScreens.UpdateScreen.name
+        composable("$updateName/{bookItemId}",
+                    arguments = listOf(navArgument("bookItemId") {
+                        type = NavType.StringType
+                    })) {navBackStackEntry ->
+            navBackStackEntry.arguments?.getString("bookItemId").let {
+                BookUpdateScreen(navController = navController, bookItemId = it.toString())
             }
         }
     }
