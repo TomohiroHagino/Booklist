@@ -151,7 +151,7 @@ fun ShowBookDetails(navController: NavController, detailsViewModel: DetailsViewM
                     publishedDate = bookData?.publishedDate,
                     pageCount = bookData?.pageCount.toString(),
                     rating = 0.0,
-                    googlebookId = googleBookId,
+                    googleBookId = googleBookId,
                     userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
                 )

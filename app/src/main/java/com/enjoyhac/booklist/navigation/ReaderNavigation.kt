@@ -1,5 +1,6 @@
 package com.enjoyhac.booklist.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -65,6 +66,7 @@ fun ReaderNavigation() {
                         type = NavType.StringType
                     })) {navBackStackEntry ->
             navBackStackEntry.arguments?.getString("bookItemId").let {
+                Log.d("INFO", "ReaderNavigation: ${navBackStackEntry.arguments?.getString("bookItemId")}")
                 BookUpdateScreen(navController = navController, bookItemId = it.toString())
             }
         }

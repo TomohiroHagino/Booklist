@@ -31,5 +31,5 @@ data class MBook(
     var userId: String? = null,
     @get:PropertyName("google_book_id")
     @set:PropertyName("google_book_id")
-    var googlebookId: String? = null
+    var googleBookId: String? = null
 )
