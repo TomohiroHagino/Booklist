@@ -12,6 +12,7 @@ import com.enjoyhac.booklist.screens.ReaderScreens
 import com.enjoyhac.booklist.screens.ReaderSplashScreen
 import com.enjoyhac.booklist.screens.details.BookDetailsScreen
 import com.enjoyhac.booklist.screens.home.Home
+import com.enjoyhac.booklist.screens.home.HomeScreenViewModel
 import com.enjoyhac.booklist.screens.login.ReaderLoginScreen
 import com.enjoyhac.booklist.screens.search.BookSearchViewModel
 import com.enjoyhac.booklist.screens.search.SearchScreen
@@ -34,7 +35,8 @@ fun ReaderNavigation() {
         }
 
         composable(ReaderScreens.ReaderHomeScreen.name) {
-            Home(navController = navController)
+            val homeViewModel = hiltViewModel<HomeScreenViewModel>()
+            Home(navController = navController, viewModel = homeViewModel)
         }
 
         composable(ReaderScreens.SearchScreen.name) {

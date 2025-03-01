@@ -1,5 +1,6 @@
 package com.enjoyhac.booklist.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.enjoyhac.booklist.components.*
 import com.enjoyhac.booklist.model.MBook
@@ -23,7 +25,7 @@ import com.enjoyhac.booklist.screens.ReaderScreens
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun Home(navController: NavController) {
+fun Home(navController: NavController, viewModel: HomeScreenViewModel = hiltViewModel()) {
     Scaffold(
         topBar = { ReaderAppBar(title = "Booklist", navController = navController ) },
         floatingActionButton = {
@@ -33,22 +35,31 @@ fun Home(navController: NavController) {
         //content
         Surface(modifier = Modifier.fillMaxSize()) {
             //home content
-            HomeContect(navController)
+            HomeContent(navController, viewModel)
         }
     }
 }
 
-@Preview
 @Composable
-fun HomeContect(navController: NavController = NavController(LocalContext.current)) {
+fun HomeContent(navController: NavController = NavController(LocalContext.current), viewModel: HomeScreenViewModel) {
 
-    val listOfBooks = listOf(
-        MBook(id = "data1", title = "Hello Again 1", authors = "All of us", notes = null),
-        MBook(id = "data2", title = "Hello Again 2", authors = "All of us", notes = null),
-        MBook(id = "data3", title = "Hello Again 3", authors = "All of us", notes = null),
-        MBook(id = "data4", title = "Hello Again 4", authors = "All of us", notes = null),
-        MBook(id = "data5", title = "Hello Again 5", authors = "All of us", notes = null),
-    )
+    var listOfBooks = emptyList<MBook>()
+    val currentUser = FirebaseAuth.getInstance().currentUser
+
+    if(!viewModel.data.value.data.isNullOrEmpty()) {
+        listOfBooks = viewModel.data.value?.data!!.toList().filter { mBook ->
+            mBook.userId == currentUser?.uid.toString()
+        }
+    }
+
+//    val listOfBooks = listOf(
+//        MBook(id = "data1", title = "Hello Again 1", authors = "All of us", notes = null),
+//        MBook(id = "data2", title = "Hello Again 2", authors = "All of us", notes = null),
+//        MBook(id = "data3", title = "Hello Again 3", authors = "All of us", notes = null),
+//        MBook(id = "data4", title = "Hello Again 4", authors = "All of us", notes = null),
+//        MBook(id = "data5", title = "Hello Again 5", authors = "All of us", notes = null),
+//    )
+    
     val currentUserName = if (!FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty())
         FirebaseAuth.getInstance().currentUser?.email?.split("@")?.get(0) else "N/A"
     Column(
@@ -58,8 +69,9 @@ fun HomeContect(navController: NavController = NavController(LocalContext.curren
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
                     contentDescription = "Profile",
-                    modifier = Modifier.size(45.dp)
-                                       .clickable { navController.navigate(ReaderScreens.ReaderStatsScreen.name) },
+                    modifier = Modifier
+                        .size(45.dp)
+                        .clickable { navController.navigate(ReaderScreens.ReaderStatsScreen.name) },
                     tint = MaterialTheme.colors.secondaryVariant
                 )
                 Text(
@@ -90,7 +102,8 @@ fun HomeContect(navController: NavController = NavController(LocalContext.curren
 @Composable
 fun BookListArea(listOfBooks: List<MBook>, navController: NavController) {
     HorizontalScrollableComponent(listOfBooks) {
-
+        Log.d("TAG","BookListArea $it")
+        // Todo: Cardをクリックすると詳細に移動する
     }
 }
 
@@ -102,9 +115,10 @@ fun HorizontalScrollableComponent(
     val scrollState = rememberScrollState()
 
     Row(
-        modifier = Modifier.fillMaxWidth()
-                            .heightIn(280.dp)
-                            .horizontalScroll(scrollState)) {
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(280.dp)
+            .horizontalScroll(scrollState)) {
 
             for (book in listOfBooks) {
                 ListCard(book) {
