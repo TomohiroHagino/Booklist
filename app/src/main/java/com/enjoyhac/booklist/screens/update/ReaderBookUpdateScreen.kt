@@ -120,8 +120,7 @@ fun ShowSimpleForm(book: MBook,
     val ratingVal = remember {
         mutableStateOf(0)
     }
-    SimpleForm(defaultValue = if (book.notes.toString().isNotEmpty()) book.notes.toString()
-    else "No thoughts available."){ note ->
+    SimpleForm(defaultValue = book.notes.toString().ifEmpty { "No thoughts available." }){ note ->
         notesText.value = note
     }
 
