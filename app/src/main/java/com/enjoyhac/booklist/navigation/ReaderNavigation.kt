@@ -24,16 +24,19 @@ import com.enjoyhac.booklist.screens.update.BookUpdateScreen
 @Composable
 fun ReaderNavigation() {
     val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = ReaderScreens.SplashScreen.name
-    ) {
+    NavHost(navController = navController,
+        startDestination = ReaderScreens.SplashScreen.name ){
+
         composable(ReaderScreens.SplashScreen.name) {
             ReaderSplashScreen(navController = navController)
         }
-
         composable(ReaderScreens.LoginScreen.name) {
             ReaderLoginScreen(navController = navController)
+        }
+
+        composable(ReaderScreens.ReaderStatsScreen.name) {
+            val homeViewModel = hiltViewModel<HomeScreenViewModel>()
+            ReaderStatsScreen(navController = navController, viewModel = homeViewModel)
         }
 
         composable(ReaderScreens.ReaderHomeScreen.name) {
@@ -42,31 +45,29 @@ fun ReaderNavigation() {
         }
 
         composable(ReaderScreens.SearchScreen.name) {
-            val viewModel = hiltViewModel<BookSearchViewModel>()
-            SearchScreen(navController = navController, viewModel)
+            val searchViewModel = hiltViewModel<BookSearchViewModel>()
+
+            SearchScreen(navController = navController, viewModel = searchViewModel)
         }
 
-        composable(ReaderScreens.ReaderStatsScreen.name) {
-            ReaderStatsScreen(navController = navController)
-        }
+
 
         val detailName = ReaderScreens.DetailScreen.name
-        composable("$detailName/{bookId}", arguments = listOf(navArgument("bookId") {
+        composable("$detailName/{bookId}", arguments = listOf(navArgument("bookId"){
             type = NavType.StringType
-            })) { backStackEntry ->
-                backStackEntry.arguments?.getString("bookId").let {
-                val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
-                BookDetailsScreen(navController = navController, bookId = bookId)
+        })) { backStackEntry ->
+            backStackEntry.arguments?.getString("bookId").let {
+
+                BookDetailsScreen(navController = navController, bookId = it.toString())
             }
         }
 
         val updateName = ReaderScreens.UpdateScreen.name
         composable("$updateName/{bookItemId}",
-                    arguments = listOf(navArgument("bookItemId") {
-                        type = NavType.StringType
-                    })) {navBackStackEntry ->
+            arguments = listOf(navArgument("bookItemId") {
+                type = NavType.StringType
+            })) { navBackStackEntry ->
             navBackStackEntry.arguments?.getString("bookItemId").let {
-                Log.d("INFO", "ReaderNavigation: ${navBackStackEntry.arguments?.getString("bookItemId")}")
                 BookUpdateScreen(navController = navController, bookItemId = it.toString())
             }
         }

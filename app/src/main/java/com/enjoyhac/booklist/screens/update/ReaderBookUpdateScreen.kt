@@ -48,8 +48,10 @@ fun BookUpdateScreen(navController: NavHostController,
                      bookItemId: String,
                      viewModel: HomeScreenViewModel = hiltViewModel()) {
 
-    Scaffold(topBar = {
-        ReaderAppBar(title = "Update Book",
+    Scaffold(
+        topBar = {
+        ReaderAppBar(
+            title = "Update Book",
             icon = Icons.Default.ArrowBack,
             showProfile = false,
             navController = navController){
@@ -78,29 +80,24 @@ fun BookUpdateScreen(navController: NavHostController,
                     bookInfo.loading = false
 
                 }else {
-                    Text(text = viewModel.data.value.data?.get(0)?.title.toString())
-//                    Surface(modifier = Modifier
-//                        .padding(2.dp)
-//                        .fillMaxWidth(),
-//                        shape = CircleShape,
-//                        elevation = 4.dp) {
-//                        ShowBookUpdate(bookInfo = viewModel.data.value,
-//                            bookItemId = bookItemId)
-//
-//                    }
-//
-//                    ShowSimpleForm(book = viewModel.data.value.data?.first { mBook ->
-//                        mBook.googleBookId == bookItemId
-//                    }!!, navController)
+                    Surface(modifier = Modifier
+                        .padding(2.dp)
+                        .fillMaxWidth(),
+                        shape = CircleShape,
+                        elevation = 4.dp) {
+                        ShowBookUpdate(
+                            bookInfo = viewModel.data.value,
+                            bookItemId = bookItemId
+                        )
+                    }
 
+                    ShowSimpleForm(book = viewModel.data.value.data?.first { mBook ->
+                        mBook.googleBookId == bookItemId
+                    }!!, navController)
                 }
-
-
             }
         }
-
     }
-
 }
 
 @ExperimentalComposeUiApi
@@ -126,8 +123,6 @@ fun ShowSimpleForm(book: MBook,
     SimpleForm(defaultValue = if (book.notes.toString().isNotEmpty()) book.notes.toString()
     else "No thoughts available."){ note ->
         notesText.value = note
-
-
     }
 
     Row(modifier = Modifier.padding(4.dp),
@@ -172,7 +167,6 @@ fun ShowSimpleForm(book: MBook,
 //            ratingVal.value = rating
 //            Log.d("TAG", "ShowSimpleForm: ${ratingVal.value}")
 //        }
-//
 //    }
 
     Spacer(modifier = Modifier.padding(bottom = 15.dp))
@@ -182,9 +176,7 @@ fun ShowSimpleForm(book: MBook,
         val changedRating = book.rating?.toInt() != ratingVal.value
         val isFinishedTimeStamp = if (isFinishedReading.value) Timestamp.now() else book.finishedReading
         val isStartedTimeStamp = if (isStartedReading.value) Timestamp.now() else book.startedReading
-
         val bookUpdate = changedNotes || changedRating || isStartedReading.value || isFinishedReading.value
-
         val bookToUpdate = hashMapOf(
             "finished_reading_at" to isFinishedTimeStamp,
             "started_reading_at" to isStartedTimeStamp,
@@ -268,9 +260,7 @@ fun ShowAlertDialog(
                     }
                     TextButton(onClick = { openDialog.value = false }) {
                         Text(text = "No")
-
                     }
-
                 }
             })
     }
@@ -318,26 +308,23 @@ fun SimpleForm(
 }
 
 @Composable
-fun ShowBookUpdate(bookInfo: DataOrException<List<MBook>,
-        Boolean, Exception>, bookItemId: String) {
+fun ShowBookUpdate(
+    bookInfo: DataOrException<List<MBook>, Boolean, Exception>,
+    bookItemId: String
+) {
     Row() {
         Spacer(modifier = Modifier.width(43.dp))
         if (bookInfo.data != null) {
-            Column(modifier = Modifier.padding(4.dp),
+            Column(
+                modifier = Modifier.padding(4.dp),
                 verticalArrangement = Arrangement.Center
             ) {
-                CardListItem(book = bookInfo.data!!.first{mBook ->
+                CardListItem(book = bookInfo.data!!.first{ mBook ->
                     mBook.googleBookId == bookItemId
-
                 }, onPressDetails = {})
-
             }
         }
-
     }
-
-
-
 }
 
 @Composable
@@ -351,7 +338,8 @@ fun CardListItem(book: MBook,
         .clickable { },
         elevation = 8.dp) {
         Row(horizontalArrangement = Arrangement.Start) {
-            Image(painter = rememberImagePainter(data = book.photoUrl.toString()),
+            Image(
+                painter = rememberImagePainter(data = book.photoUrl.toString().replace("http://", "https://")),
                 contentDescription = null ,
                 modifier = Modifier
                     .height(100.dp)
