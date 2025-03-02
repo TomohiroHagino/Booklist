@@ -80,7 +80,7 @@ fun ReaderStatsScreen(navController: NavController,
                 ) {
                     val readBooksList: List<MBook> = if (!viewModel.data.value.data.isNullOrEmpty()) {
                         books.filter { mBook ->
-                            Log.d("INFO", "mBook.userId: ${mBook.userId} currentUser.uid: ${currentUser?.uid} mBook.finishedReading: ${mBook.finishedReading}")
+                            // Log.d("INFO", "mBook.userId: ${mBook.userId} currentUser.uid: ${currentUser?.uid} mBook.finishedReading: ${mBook.finishedReading}")
                             (mBook.userId == currentUser?.uid) && (mBook.finishedReading != null)
                         }
                     } else {

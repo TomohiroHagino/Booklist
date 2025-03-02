@@ -23,7 +23,7 @@ class BookRepository @Inject constructor(private val api: BooksApi) {
             result.loading = false
         } catch (e: Exception) {
             result.e = e
-            Log.d("BookRepository(Exception)", "getBooks: $e")
+//            Log.d("BookRepository(Exception)", "getBooks: $e")
         }
         return result
     }
@@ -37,7 +37,7 @@ class BookRepository @Inject constructor(private val api: BooksApi) {
             result.loading = false
         } catch (e: Exception) {
             result.e = e
-            Log.d("BookRepository(Exception)", "getBookInfo: $e")
+            // Log.d("BookRepository(Exception)", "getBookInfo: $e")
         }
         return result
     }

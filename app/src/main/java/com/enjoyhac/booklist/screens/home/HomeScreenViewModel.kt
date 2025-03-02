@@ -29,6 +29,6 @@ class HomeScreenViewModel @Inject constructor(
             data.value = repository.getAllBooksFromDatabase()
             if (!data.value.data.isNullOrEmpty()) data.value.loading = false
         }
-        Log.d("TAG", "getAllBooksFromDatabase: ${data.value.data?.toList().toString()}")
+        // Log.d("TAG", "getAllBooksFromDatabase: ${data.value.data?.toList().toString()}")
     }
 }

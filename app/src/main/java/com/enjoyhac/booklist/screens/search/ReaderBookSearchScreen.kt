@@ -64,10 +64,10 @@ fun SearchScreen(navController: NavController, viewModel: BookSearchViewModel = 
 fun BookList(navController: NavController, viewModel: BookSearchViewModel) {
 
     if (viewModel.listOfBooks.value.loading == true) {
-        Log.d("ReaderBookSearchScreen(loading...)", "BookList: ${viewModel.listOfBooks.value.data}")
+        // Log.d("ReaderBookSearchScreen(loading...)", "BookList: ${viewModel.listOfBooks.value.data}")
         LinearProgressIndicator()
     } else {
-        Log.d("ReaderBookSearchScreen(loadning is done)", "BookList: ${viewModel.listOfBooks.value.data}")
+        // Log.d("ReaderBookSearchScreen(loadning is done)", "BookList: ${viewModel.listOfBooks.value.data}")
 
         val listOfBooks = viewModel.listOfBooks.value.data!!
 

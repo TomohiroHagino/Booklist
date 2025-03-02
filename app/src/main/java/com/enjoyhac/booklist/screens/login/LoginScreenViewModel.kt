@@ -27,15 +27,15 @@ class LoginScreenViewModel: ViewModel() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful){
-                        Log.d("TAG", "signInWithEmailAndPassword: ログイン成功 ${task.result.toString()}")
+                        // Log.d("TAG", "signInWithEmailAndPassword: ログイン成功 ${task.result.toString()}")
                         home()
                     } else {
-                        Log.d("TAG", "signInWithEmailAndPassword: ${task.result.toString()}")
+                        // Log.d("TAG", "signInWithEmailAndPassword: ${task.result.toString()}")
                     }
                 }
 
         } catch (ex: Exception) {
-            Log.d("FB", "signInWithEmailAndPassword: ${ex.message}")
+            // Log.d("FB", "signInWithEmailAndPassword: ${ex.message}")
         }
 
     }
@@ -51,7 +51,7 @@ class LoginScreenViewModel: ViewModel() {
                         createUser(diplayName)
                         home()
                     } else {
-                        Log.d("TAG", "createUserWithEmailAndPassword: ログイン失敗 ${task.result.toString()}")
+                        // Log.d("TAG", "createUserWithEmailAndPassword: ログイン失敗 ${task.result.toString()}")
                     }
                 }
         }

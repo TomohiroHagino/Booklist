@@ -71,7 +71,7 @@ fun BookUpdateScreen(navController: NavHostController,
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = CenterHorizontally
             ) {
-                Log.d("INFO", "BookUpdateScreen: ${viewModel.data.value.data.toString()}")
+                // Log.d("INFO", "BookUpdateScreen: ${viewModel.data.value.data.toString()}")
                 if (bookInfo.loading == true) {
                     LinearProgressIndicator()
                     bookInfo.loading = false
@@ -161,7 +161,7 @@ fun ShowSimpleForm(book: MBook,
     book.rating?.toInt().let {
         RatingBar(rating = it!!){ rating->
             ratingVal.value = rating
-            Log.d("TAG", "ShowSimpleForm: ${ratingVal.value}")
+            // Log.d("TAG", "ShowSimpleForm: ${ratingVal.value}")
         }
     }
 

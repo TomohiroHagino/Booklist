@@ -133,7 +133,7 @@ fun ReadingRightNowArea(listOfBooks: List<MBook>,
     }
 
     HorizontalScrollableComponent(readingNowList){
-        Log.d("TAG", "BoolListArea: $it")
+        // Log.d("TAG", "BoolListArea: $it")
         navController.navigate(ReaderScreens.UpdateScreen.name + "/$it")
     }
 }

@@ -72,11 +72,10 @@ fun BookDetailsScreen(navController: NavController, bookId: String, viewModel: D
 @Composable
 fun ShowBookDetails(navController: NavController, detailsViewModel: DetailsViewModel) {
     if (detailsViewModel.bookInfo.value.loading == true) {
-        Log.d("BookDetailsScreen(loading...)", "BookInfo: ${detailsViewModel.bookInfo.value.data}")
+        // Log.d("BookDetailsScreen(loading...)", "BookInfo: ${detailsViewModel.bookInfo.value.data}")
         LinearProgressIndicator()
     } else {
-        Log.d("BookDetailsScreen(loadning is done)", "BookInfo: ${detailsViewModel.bookInfo.value.data}")
-
+        // Log.d("BookDetailsScreen(loadning is done)", "BookInfo: ${detailsViewModel.bookInfo.value.data}")
         val bookData = detailsViewModel.bookInfo.value.data!!.volumeInfo
         val googleBookId = detailsViewModel.bookInfo.value.data!!.id
 
@@ -180,7 +179,7 @@ fun saveToFirebase(book: MBook, navController: NavController) {
                                     navController.popBackStack()
                                 }
                             }.addOnFailureListener {
-                                Log.d("ReaderBiikDetailsScreen(Error)", "saveToFirebase: Error updting doc", it)
+                                // Log.d("ReaderBiikDetailsScreen(Error)", "saveToFirebase: Error updting doc", it)
                             }
             }
     }
