@@ -30,10 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.enjoyhac.booklist.R
-import com.enjoyhac.booklist.components.InputField
-import com.enjoyhac.booklist.components.ReaderAppBar
-import com.enjoyhac.booklist.components.RoundedButton
-import com.enjoyhac.booklist.components.showToast
+import com.enjoyhac.booklist.components.*
 import com.enjoyhac.booklist.data.DataOrException
 import com.enjoyhac.booklist.model.MBook
 import com.enjoyhac.booklist.screens.ReaderScreens
@@ -161,12 +158,12 @@ fun ShowSimpleForm(book: MBook,
 
     }
     Text(text = "Rating", modifier = Modifier.padding(bottom = 3.dp))
-//    book.rating?.toInt().let {
-//        RatingBar(rating = it!!){ rating->
-//            ratingVal.value = rating
-//            Log.d("TAG", "ShowSimpleForm: ${ratingVal.value}")
-//        }
-//    }
+    book.rating?.toInt().let {
+        RatingBar(rating = it!!){ rating->
+            ratingVal.value = rating
+            Log.d("TAG", "ShowSimpleForm: ${ratingVal.value}")
+        }
+    }
 
     Spacer(modifier = Modifier.padding(bottom = 15.dp))
     Row {
@@ -189,7 +186,7 @@ fun ShowSimpleForm(book: MBook,
                     .document(book.id!!)
                     .update(bookToUpdate)
                     .addOnCompleteListener {
-                        showToast(context, "Book Updated Successfully!")
+                        showToast(context, "更新しました！")
                         navController.navigate(ReaderScreens.ReaderHomeScreen.name)
 
                         // Log.d("Update", "ShowSimpleForm: ${task.result.toString()}")

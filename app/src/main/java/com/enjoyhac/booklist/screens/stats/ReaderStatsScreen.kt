@@ -1,5 +1,6 @@
 package com.enjoyhac.booklist.screens.stats
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -79,10 +80,10 @@ fun ReaderStatsScreen(navController: NavController,
                 ) {
                     val readBooksList: List<MBook> = if (!viewModel.data.value.data.isNullOrEmpty()) {
                         books.filter { mBook ->
+                            Log.d("INFO", "mBook.userId: ${mBook.userId} currentUser.uid: ${currentUser?.uid} mBook.finishedReading: ${mBook.finishedReading}")
                             (mBook.userId == currentUser?.uid) && (mBook.finishedReading != null)
                         }
-
-                    }else {
+                    } else {
                         emptyList()
                     }
 
@@ -92,18 +93,16 @@ fun ReaderStatsScreen(navController: NavController,
 
                     Column(modifier = Modifier.padding(start = 25.dp, top = 4.dp, bottom = 4.dp),
                         horizontalAlignment = Alignment.Start) {
-                        Text(text = "Your Stats", style = MaterialTheme.typography.h5)
+                        Text(text = "読書状況", style = MaterialTheme.typography.h5)
                         Divider()
-                        Text(text = "You're reading: ${readingBooks.size} books")
-                        Text(text = "You've read: ${readBooksList.size} books")
-
+                        Text(text = "読書中: ${readingBooks.size} books")
+                        Text(text = "既読: ${readBooksList.size} books")
                     }
-
                 }
 
                 if (viewModel.data.value.loading == true) {
                     LinearProgressIndicator()
-                }else {
+                } else {
                     Divider()
                     LazyColumn(modifier = Modifier
                         .fillMaxWidth()
@@ -114,27 +113,18 @@ fun ReaderStatsScreen(navController: NavController,
                             viewModel.data.value.data!!.filter { mBook ->
                                 (mBook.userId == currentUser?.uid) && (mBook.finishedReading != null)
                             }
-                        }else {
+                        } else {
                             emptyList()
 
                         }
                         items(items = readBooks) {book ->
                             BookRowStats(book = book )
                         }
-
                     }
                 }
-
             }
-
-
-
-
-
         }
-
     }
-
 }
 
 
@@ -159,7 +149,7 @@ fun BookRowStats(
             val imageUrl: String = if(book.photoUrl.toString().isEmpty())
                 "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=80&q=80"
             else {
-                book.photoUrl.toString()
+                book.photoUrl.toString().replace("http://", "https://")
             }
             Image(
                 painter = rememberImagePainter(data = imageUrl),

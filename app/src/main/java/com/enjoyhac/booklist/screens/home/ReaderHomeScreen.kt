@@ -85,7 +85,7 @@ fun HomeContent(navController: NavController = NavController(LocalContext.curren
                 )
 //                Divider()
             }
-            TitleSection(label = "あなたは現在、読書中です。。。")
+            TitleSection(label = "これらの本を読書中です。")
 //            Spacer()
         }
         ReadingRightNowArea(listOfBooks = listOfBooks, navController = navController )

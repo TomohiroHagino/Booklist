@@ -25,6 +25,8 @@ data class MBook(
     @get:PropertyName("started_reading_at")
     @set:PropertyName("started_reading_at")
     var startedReading: Timestamp? = null,
+    @get:PropertyName("finished_reading_at")
+    @set:PropertyName("finished_reading_at")
     var finishedReading: Timestamp? = null,
     @get:PropertyName("user_id")
     @set:PropertyName("user_id")
