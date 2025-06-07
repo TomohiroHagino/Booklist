@@ -2,6 +2,8 @@
 
 Andorid(kotlinポートフォリオ)
 
+Jetpack compose, MVVM, スプラッシュスクリーン, Dagger, Hilt, Firebase Auth, Firebase Firestore
+
 #### 読んだ本に感想をつけ評価ができるアプリ
 ||||
 |-|-|-|
